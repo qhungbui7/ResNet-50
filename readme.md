@@ -27,6 +27,7 @@ Base on the plain network, they insert connections, which turn it into its count
 * The projection shortcut in Equation 2 is used to match dimensions (done by 1x1 convolutions).
 For these options, when the shortcut go across feature maps of 2 different sizes, they are performed with a stride 2. 
 #### Implementation   
-
+Images are 224 x 224 sampling cropped from it and its horizontal flip from [256, 480] for scale augmentation with per pixel mean substracted, standard color augmentation. They also adopt batch normalization between convolution and activation. 
+To train it, they uses SGD, mini-batch size of 256, the learning rate starts from 0.1 and starts from 0.1 and divide 10 if it reaches error plateaus. They utilize a weight decay 0.0001 and a 0.9 momentum.
 
 ## Implementation Details

@@ -29,5 +29,20 @@ For these options, when the shortcut go across feature maps of 2 different sizes
 #### Implementation   
 Images are 224 x 224 sampling cropped from it and its horizontal flip from [256, 480] for scale augmentation with per pixel mean substracted, standard color augmentation. They also adopt batch normalization between convolution and activation. 
 To train it, they uses SGD, mini-batch size of 256, the learning rate starts from 0.1 and starts from 0.1 and divide 10 if it reaches error plateaus. They utilize a weight decay 0.0001 and a 0.9 momentum.
+### Experiment conclusions
+They argued that optimization difficulty from deeper networks is unlikely to be caused by vanishing gradient. These plain networks are trained with Batch Normalization - which ensures forward propagated signals to have non-zero variances. They also verify that the backward propagated gradients exhibit healthy norms with Batch Normalization. Therefore, neither forward nor backward signals vanish. They conjecture that deep plain nets may have exponentially low convergence rate, which impact the reducing of the training error. 
 
+## Note
+In the paper, the authors focus on how skip connection help our model to handle the hard-to-optimization problem of deeper network and they also suggest to tackle vanishing gradient problem (VGP) by using batch normalization or several initializer. To clarify how skip connection can handle this problem, I write this section. 
+### Skip connection and vanishing gradient problem  
+In theory, the more layers, the better function that we can represent. However, deep neural networks having numerous layers is very rough and complex for optimizer to do its job (number of activation is exponentially increased) - degradation. In the other side, the deep networks tend to cause gradient to vanish in the far layers from the target function (they don't understand their importance).  
+Only if larger function classes contain the smaller one do we guarantee that increasing number of layers will power up the representing ability of the network ( 2 set of functions A, B of function network and the deeper one that can reach, we have f and f' is argmin element of these sets to the loss, B better than A does not mean f' better than f). In the other word, if we train the new layers that is added with a identity mapping (f(x) = x) - a simpliest function with better prospect, they will equal or better than the shallower one, as the new model can get a better solution to fit the training dataset.  
+
+### Reference
+https://bkai.ai/skip-connections-in-dnns/
+https://arxiv.org/abs/1512.03385
+https://d2l.ai/chapter_convolutional-modern/resnet.html
 ## Implementation Details
+
+
+
